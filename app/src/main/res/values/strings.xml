@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Crypto_Rate</string>
+    <string name="search_hint">Search your crypto</string>
+    <string name="not_found">No Results Found</string>
+</resources>
