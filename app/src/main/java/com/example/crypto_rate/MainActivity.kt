@@ -11,6 +11,8 @@ import com.android.volley.toolbox.Volley
 import com.example.crypto_rate.databinding.ActivityMainBinding
 import android.os.Handler
 import android.os.Looper
+import android.view.View
+import android.widget.Button
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -39,6 +41,11 @@ class MainActivity : AppCompatActivity() {
             // Initialize SwipeRefreshLayout
             binding.swipeRefreshLayout.setOnRefreshListener {
                 // Call the API data fetch function
+                fetchData()
+            }
+            val retryButton: Button = findViewById(R.id.retryButton)
+            retryButton.setOnClickListener {
+                // When the retry button is clicked, attempt to fetch data again
                 fetchData()
             }
 
@@ -83,21 +90,25 @@ class MainActivity : AppCompatActivity() {
 
                         } catch(e:Exception){
                           Toast.makeText(this,"error 1",Toast.LENGTH_LONG).show();
+                            // Show the retry button
+                            binding.retryButton.visibility = View.VISIBLE
                         }finally {
 
                             // Hide the refreshing animation
                             binding.swipeRefreshLayout.isRefreshing = false
                         }
                     }, Response.ErrorListener {
-                        Toast.makeText(this,"error",Toast.LENGTH_LONG).show();
+                        Toast.makeText(this,"Error : Please Check your Internet Connection ",Toast.LENGTH_LONG).show();
                         // Hide the refreshing animation
                         binding.swipeRefreshLayout.isRefreshing = false
+                        // Show the retry button
+                        binding.retryButton.visibility = View.VISIBLE
 
                     })
                     {
                         override fun getHeaders(): Map<String, String> {
                             val headers=HashMap<String,String>();
-                            headers["X-CMC_PRO_API_KEY"]="your_key"
+                            headers["X-CMC_PRO_API_KEY"]="your key"
                             return headers
                         }
                     }
@@ -109,6 +120,8 @@ class MainActivity : AppCompatActivity() {
         private fun fetchData() {
             // Call the API data fetch function
             apiData
+            // Hide the retry button
+            binding.retryButton.visibility = View.GONE
             // Display data refreshed message
             Toast.makeText(this, "Data refreshed", Toast.LENGTH_SHORT).show()
         }
