@@ -3,18 +3,26 @@ package com.example.crypto_rate
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.crypto_rate.databinding.ActivityMainBinding
-import com.example.crypto_rate.databinding.RvItemBinding
+import android.os.Handler
+import android.os.Looper
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
-    class MainActivity : AppCompatActivity() {
+
+class MainActivity : AppCompatActivity() {
 
         private lateinit var binding: ActivityMainBinding
         private lateinit var rvAdapter: RvAdapter
         private lateinit var data: ArrayList<Modal>
+        private val handler = Handler(Looper.getMainLooper())
+         private var lastRefreshTime: String? = null
 
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
@@ -25,6 +33,24 @@ import com.example.crypto_rate.databinding.RvItemBinding
             rvAdapter = RvAdapter(this, data)
             binding.RecyclerView.layoutManager = LinearLayoutManager(this)
             binding.RecyclerView.adapter = rvAdapter
+
+            setSupportActionBar(findViewById<Toolbar>(R.id.toolbar))
+
+            // Initialize SwipeRefreshLayout
+            binding.swipeRefreshLayout.setOnRefreshListener {
+                // Call the API data fetch function
+                fetchData()
+            }
+
+            // Schedule data refresh every 3 minutes
+            handler.postDelayed(object : Runnable {
+                override fun run() {
+                    fetchData()
+                    handler.postDelayed(this, 3 * 60 * 1000) // 3 minutes in milliseconds
+//                    Toast.makeText(applicationContext, "Data refreshed", Toast.LENGTH_SHORT).show()
+                }
+            }, 3 * 60 * 1000) // 3 minutes in milliseconds
+
         }
 
         val apiData: Unit
@@ -52,21 +78,44 @@ import com.example.crypto_rate.databinding.RvItemBinding
                                 data.add(Modal(name,symbol, price.toString(),iconUrl))
                             }
                             rvAdapter.notifyDataSetChanged()
+                            // Update the last refresh time
+                            updateLastRefreshTime()
+
                         } catch(e:Exception){
                           Toast.makeText(this,"error 1",Toast.LENGTH_LONG).show();
+                        }finally {
+
+                            // Hide the refreshing animation
+                            binding.swipeRefreshLayout.isRefreshing = false
                         }
                     }, Response.ErrorListener {
                         Toast.makeText(this,"error",Toast.LENGTH_LONG).show();
+                        // Hide the refreshing animation
+                        binding.swipeRefreshLayout.isRefreshing = false
 
                     })
                     {
                         override fun getHeaders(): Map<String, String> {
                             val headers=HashMap<String,String>();
-                            headers["X-CMC_PRO_API_KEY"]="insert your key here"
+                            headers["X-CMC_PRO_API_KEY"]="your_key"
                             return headers
                         }
                     }
 
                 queue.add(jsonObjectRequest)
             }
+
+        // Function to fetch data, invoked when SwipeRefreshLayout is triggered
+        private fun fetchData() {
+            // Call the API data fetch function
+            apiData
+            // Display data refreshed message
+            Toast.makeText(this, "Data refreshed", Toast.LENGTH_SHORT).show()
+        }
+    // After fetching data in apiData method
+    private fun updateLastRefreshTime() {
+        // Update last refresh time
+        lastRefreshTime = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
+        binding.lastRefreshtext.text = "Last Refresh: $lastRefreshTime"
+    }
     }
