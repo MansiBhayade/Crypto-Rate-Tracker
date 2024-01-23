@@ -22,9 +22,9 @@ class MainActivity : AppCompatActivity() {
 
         private lateinit var binding: ActivityMainBinding
         private lateinit var rvAdapter: RvAdapter
-        private lateinit var data: ArrayList<Modal>
+        lateinit var data: ArrayList<Modal>
         private val handler = Handler(Looper.getMainLooper())
-         private var lastRefreshTime: String? = null
+         var lastRefreshTime: String? = null
 
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
         val apiData: Unit
             get(){
-                val url="https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest"
+                val url="https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest" // To fetch latest data
 
                 val queue = Volley.newRequestQueue(this)
                 val jsonObjectRequest:JsonObjectRequest=
@@ -126,7 +126,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Data refreshed", Toast.LENGTH_SHORT).show()
         }
     // After fetching data in apiData method
-    private fun updateLastRefreshTime() {
+    fun updateLastRefreshTime() {
         // Update last refresh time
         lastRefreshTime = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
         binding.lastRefreshtext.text = "Last Refresh: $lastRefreshTime"
