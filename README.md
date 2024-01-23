@@ -16,7 +16,7 @@ Crypto-Rate-Tracker is a feature-rich Android app that provides real-time crypto
 
 ## Features
 
-1. Currency Feed
+### 1. Currency Feed
 
 <img src="Images/splash_screenshot.png" height='auto' width='270'/>
 <img src="Images/feed_screenshot.png" height='auto' width='270'/>
@@ -24,7 +24,7 @@ Crypto-Rate-Tracker is a feature-rich Android app that provides real-time crypto
 
 Browse through a well-organized feed of cryptocurrencies. Each currency item includes detailed information about its cryptocurrency.
 
-2. Refresh Functionality
+### 2. Refresh Functionality
 
 <img src = "Images/swiperefresh_screenshot.png" height='auto' width='270'/> 
 
@@ -35,7 +35,7 @@ Browse through a well-organized feed of cryptocurrencies. Each currency item inc
 * Last Refresh Timestamp:
    Dedicated UI section displaying the timestamp of the last refresh.
 
-3. Retry Feature
+### 3. Retry Feature
 
 In case of connectivity issues or API errors, use the retry button to reload the currency feed.
 
