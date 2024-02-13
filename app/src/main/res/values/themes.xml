@@ -3,6 +3,7 @@
     <style name="Base.Theme.Crypto_Rate" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:editTextColor">@android:color/white</item>
     </style>
 
     <style name="Theme.Crypto_Rate" parent="Base.Theme.Crypto_Rate" />

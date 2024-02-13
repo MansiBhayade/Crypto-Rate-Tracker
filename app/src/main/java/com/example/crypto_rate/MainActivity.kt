@@ -13,6 +13,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.widget.Button
+import androidx.appcompat.widget.SearchView
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -23,8 +24,9 @@ class MainActivity : AppCompatActivity() {
         private lateinit var binding: ActivityMainBinding
         private lateinit var rvAdapter: RvAdapter
         lateinit var data: ArrayList<Modal>
-        private val handler = Handler(Looper.getMainLooper())
+         private val handler = Handler(Looper.getMainLooper())
          var lastRefreshTime: String? = null
+
 
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
@@ -37,6 +39,20 @@ class MainActivity : AppCompatActivity() {
             binding.RecyclerView.adapter = rvAdapter
 
             setSupportActionBar(findViewById<Toolbar>(R.id.toolbar))
+            val searchView:SearchView = findViewById(R.id.search_bar);
+
+
+            searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return false
+                }
+
+                override fun onQueryTextChange(query: String?): Boolean {
+                    filter(query)
+                    return true
+                }
+            })
+
 
             // Initialize SwipeRefreshLayout
             binding.swipeRefreshLayout.setOnRefreshListener {
@@ -108,7 +124,7 @@ class MainActivity : AppCompatActivity() {
                     {
                         override fun getHeaders(): Map<String, String> {
                             val headers=HashMap<String,String>();
-                            headers["X-CMC_PRO_API_KEY"]="your key"
+                            headers["X-CMC_PRO_API_KEY"]="c3a74a00-760e-4f63-8a61-a0841d882c02"
                             return headers
                         }
                     }
@@ -130,5 +146,21 @@ class MainActivity : AppCompatActivity() {
         // Update last refresh time
         lastRefreshTime = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
         binding.lastRefreshtext.text = "Last Refresh: $lastRefreshTime"
+    }
+
+    //Function to Filter Adapter based on SearchView input string
+    private fun filter(query:String?){
+        val filteredlist = ArrayList<Modal>();
+
+        if (query.isNullOrBlank()) {
+            rvAdapter.setadapterData(data)
+        }else {
+            for (item in data) {
+                if (item.name.lowercase().contains(query)) {
+                    filteredlist.add(item)
+                }
+            }
+            rvAdapter.setadapterData(filteredlist)
+        }
     }
     }

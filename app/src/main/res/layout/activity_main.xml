@@ -19,6 +19,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextColor="@android:color/white" />
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/search_background"
+        app:layout_constraintBottom_toTopOf="@+id/lastRefreshtext"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@android:color/white"
+        app:queryHint="Enter Cryptocurrency Name"
+        app:searchIcon= "@drawable/ic_search"
+        app:closeIcon="@drawable/ic_close"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
     <TextView
         android:id="@+id/lastRefreshtext"
         android:layout_width="wrap_content"
@@ -29,7 +44,7 @@
         android:textColor="@android:color/white"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/search_bar"
         tools:text="12:11:28" />
 
 

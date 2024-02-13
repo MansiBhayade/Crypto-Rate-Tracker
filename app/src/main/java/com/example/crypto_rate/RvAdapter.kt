@@ -3,6 +3,7 @@ package com.example.crypto_rate
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.crypto_rate.databinding.RvItemBinding
@@ -31,6 +32,11 @@ class RvAdapter(val context: Context, var data:ArrayList<Modal>):RecyclerView.Ad
             .into(holder.binding.image)
         holder.binding.name.text= data[position].name
         holder.binding.symbol.text= data[position].symbol
-        holder.binding.price.text= roundedPrice
+        holder.binding.price.text= "$ " + roundedPrice
+    }
+
+    fun setadapterData(newData: ArrayList<Modal>) {
+        data = newData
+        notifyDataSetChanged()
     }
 }
