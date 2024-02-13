@@ -124,7 +124,7 @@ class MainActivity : AppCompatActivity() {
                     {
                         override fun getHeaders(): Map<String, String> {
                             val headers=HashMap<String,String>();
-                            headers["X-CMC_PRO_API_KEY"]="c3a74a00-760e-4f63-8a61-a0841d882c02"
+                            headers["X-CMC_PRO_API_KEY"]="your_key"
                             return headers
                         }
                     }
