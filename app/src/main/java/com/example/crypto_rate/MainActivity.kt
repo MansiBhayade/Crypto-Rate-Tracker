@@ -11,8 +11,11 @@ import com.android.volley.toolbox.Volley
 import com.example.crypto_rate.databinding.ActivityMainBinding
 import android.os.Handler
 import android.os.Looper
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -41,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             setSupportActionBar(findViewById<Toolbar>(R.id.toolbar))
             val searchView:SearchView = findViewById(R.id.search_bar);
 
-
+            // To search based on typing by user
             searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     return false
@@ -124,13 +127,36 @@ class MainActivity : AppCompatActivity() {
                     {
                         override fun getHeaders(): Map<String, String> {
                             val headers=HashMap<String,String>();
-                            headers["X-CMC_PRO_API_KEY"]="your_key"
+                            headers["X-CMC_PRO_API_KEY"]="c3a74a00-760e-4f63-8a61-a0841d882c02"
                             return headers
                         }
                     }
 
                 queue.add(jsonObjectRequest)
             }
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_sort, menu)
+        return true
+    }
+
+        override fun onOptionsItemSelected(item: MenuItem): Boolean {
+            return when (item.itemId) {
+                R.id.sort_name -> {
+                    // Perform sorting by name
+                    Toast.makeText(this, "Sorting by name", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.sort_rate -> {
+                    // Perform sorting by exchange rate
+                    Toast.makeText(this, "Sorting by exchange rate", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                else -> super.onOptionsItemSelected(item)
+            }
+        }
+
 
         // Function to fetch data, invoked when SwipeRefreshLayout is triggered
         private fun fetchData() {

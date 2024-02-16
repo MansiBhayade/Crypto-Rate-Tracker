@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:icon="@drawable/sort"
+        app:showAsAction="always"
+        android:title="@string/sort">
+
+        <menu>
+
+            <item
+                android:id="@+id/sort_name"
+                android:checked="true"
+                android:title="@string/name"
+                app:showAsAction="always"></item>
+
+            <item
+                android:id="@+id/sort_rate"
+                android:title="@string/exchange_rate"
+                app:showAsAction="always"></item>
+
+        </menu>
+    </item>
+
+    
+
+</menu>

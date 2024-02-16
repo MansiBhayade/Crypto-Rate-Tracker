@@ -3,4 +3,7 @@
     <string name="search_hint">Search your crypto</string>
     <string name="not_found">No Results Found</string>
     <string name="retry">Retry</string>
+    <string name="sort">Sort</string>
+    <string name="name">By Name</string>
+    <string name="exchange_rate">By Exchange Rate</string>
 </resources>
